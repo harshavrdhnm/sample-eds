@@ -4,6 +4,14 @@ import { loadFragment } from '../fragment/fragment.js';
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
+// Function to display the current time in milliseconds
+function displayCurrentTime() {
+  const timeElement = document.getElementById('current-time');
+  if (timeElement) {
+    timeElement.textContent = `Current time in milliseconds: ${Date.now()}`;
+  }
+}
+
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
     const nav = document.getElementById('nav');
@@ -159,6 +167,17 @@ export default async function decorate(block) {
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
+
+   // Create and append the time display element
+   const timeDisplay = document.createElement('div');
+   timeDisplay.id = 'current-time';
+   timeDisplay.style.marginTop = '10px';
+   nav.appendChild(timeDisplay);
+ 
+   // Update the time display every second
+   setInterval(displayCurrentTime, 1000);
+
+   
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
