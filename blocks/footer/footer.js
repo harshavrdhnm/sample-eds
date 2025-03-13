@@ -18,12 +18,13 @@ export default async function decorate(block) {
 
   // Extract selector from URL
   const urlParams = new URLSearchParams(window.location.search);
-  const selector = urlParams.get('selector');
+  const idParam = urlParams.get('id');
 
-  if (selector) {
+  if (idParam) {
     try {
       // Hit the API with the selector
-      const response = await fetch(`https://api.ipstack.com/134.201.250.155?selector=${selector}`);
+      const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${idParam}/comments`);
+      
       const data = await response.json();
 
       // Display the API response in the footer
