@@ -16,5 +16,24 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
+  // Extract selector from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const selector = urlParams.get('selector');
+
+  if (selector) {
+    try {
+      // Hit the API with the selector
+      const response = await fetch(`https://api.ipstack.com/134.201.250.155?selector=${selector}`);
+      const data = await response.json();
+
+      // Display the API response in the footer
+      const apiResponseElement = document.createElement('div');
+      apiResponseElement.textContent = JSON.stringify(data);
+      footer.append(apiResponseElement);
+    } catch (error) {
+      console.error('Error fetching API data:', error);
+    }
+  }
+
   block.append(footer);
 }
